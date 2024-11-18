@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 
+import { useState } from "react";
 
 const ProductCard = ({ product }) => {
-  const { id, title, price, description, category, image, rating } = product;
-const handleModal = (id) =>{
-    document.getElementById(`modal_${id}`).showModal() 
-}
+  const { title, price, description, category, image, rating } = product;
+  const [showModal, setShowModal] = useState(false);
+  
   return (
     <div className="card bg-base-300 shadow-xl">
       <figure>
@@ -18,14 +18,14 @@ const handleModal = (id) =>{
         <div className="card-actions justify-center">
           <button
             className="btn btn-primary"
-            onClick={() => handleModal(id)}
+            onClick={() => setShowModal(true)}
           >
             View Details
           </button>
         </div>
 
-        {
-          <dialog id={`modal_${id}`} className="modal">
+        {showModal && (
+          <div  onClick={() => setShowModal(false)} className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="modal-box">
               <img
                 className="h-72 rounded-2xl p-2 w-full"
@@ -43,11 +43,8 @@ const handleModal = (id) =>{
                 <p className="!grow-0">count: {rating?.count}</p>
               </div>
             </div>
-            <form method="dialog" className="modal-backdrop">
-              <button>close</button>
-            </form>
-          </dialog>
-        }
+          </div>
+        )}
       </div>
     </div>
   );
